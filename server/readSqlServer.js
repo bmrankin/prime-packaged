@@ -40,7 +40,8 @@ async function readSqlServer (payload) {
     // NAV
     const queryNav = `SELECT * FROM [${process.env.NAV_DATABASE}].dbo.[DS Master - LIVE$Item] where [No_] = '${item_no}'`
     const res = await sql.query(queryNav)
-    if (res.rowsAffected.length > 0) {
+
+    if (res.rowsAffected[0] > 0) {
       const navItem = res.recordset[0]
       response.msg = 'Results from database'
       response.results.exists_nav = true
@@ -49,16 +50,17 @@ async function readSqlServer (payload) {
       response.results.standard_cost_nav = navItem['Standard Cost']
     }
 
-    // Experlogix
+    // // Experlogix
     const queryExp = `SELECT * FROM [${process.env.EXP_DATABASE}].dbo.[Experlogix_Items] where [PseudoItemNumber] = '${item_no}'`
     const resExp = await sql.query(queryExp)
-    if (resExp.rowsAffected.length > 0) {
-      const expItem = resExp.recordset[0]
-      response.msg = 'Results from database'
-      response.results.desc_experlogix = expItem.FullDescription
-      response.results.exists_experlogix = true
-      response.results.list_price_experlogix = expItem.ListPrice
-    }
+
+    if (resExp.rowsAffected[0] > 0) {
+        const expItem = resExp.recordset[0]
+        response.msg = 'Results from database'
+        response.results.desc_experlogix = expItem.FullDescription
+        response.results.exists_experlogix = true
+        response.results.list_price_experlogix = expItem.ListPrice
+      }
     sql.close()
     return response
   } catch (error) {

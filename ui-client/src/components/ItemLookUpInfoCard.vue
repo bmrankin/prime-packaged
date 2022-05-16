@@ -4,7 +4,12 @@
       {{ config[type].title }}
     </template>
     <template #content>
-      <ul class="list-none p-0 m-0">
+      <template v-if="!itemInfo[config[type].exists]">
+        <div>
+          Does not exist in database
+        </div>
+      </template>
+      <ul v-else class="list-none p-0 m-0">
         <ListItemKeyValueVue
           v-for="i in config[type].listItems"
           :key="i.prop"
@@ -31,6 +36,7 @@ defineProps({
 
 const config = {
   nav: {
+    exists: 'exists_nav',
     title: 'NAV Data',
     listItems: [
       {
@@ -48,10 +54,11 @@ const config = {
       {
         label: 'Standard Cost',
         prop: 'standard_cost_nav'
-      }
+      },
     ]
   },
   experlogix: {
+    exists: 'exists_experlogix',
     title: 'Experlogix Data',
     listItems: [
       {

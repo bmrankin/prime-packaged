@@ -15,7 +15,6 @@ async function routes (fastify, options) {
 
   // Test READ
   fastify.post('/read-sql', async (request, reply) => {
-    console.log(request.body)
     const resSql = await readSqlServer({
       item_no: request.body.item_no
     })
