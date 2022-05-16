@@ -1,0 +1,21 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/static": "^5.0.2",
+    "fastify": "^3.29.0"
+  },
+  "pkg": {
+    "assets": "public/**/*",
+    "targets": ["node16-macos", "node16-win"],
+    "outputPath": "pkg"
+  }
+}

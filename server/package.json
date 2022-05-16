@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^7.0.0",
+    "fastify": "^3.29.0",
+    "mssql": "^8.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "nodemon": "^2.0.16"
+  },
+  "pkg": {
+    "targets": [
+      "node16-win",
+      "node16-macos"
+    ],
+    "outputPath": "pkg"
+  }
+}
