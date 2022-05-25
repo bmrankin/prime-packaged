@@ -9,6 +9,7 @@
           class="p-inputtext-lg"
           id="item_no"
           type="text"
+          @keyup.enter="getInfo"
         />
         <label
           for="item_no"
@@ -19,7 +20,7 @@
         class="ml-2"
         label="Search"
         :disabled="!item_no"
-        @click="getItemInfo"
+        @click="getInfo"
       />
     </div>
   </div>
@@ -33,16 +34,16 @@ const emit  = defineEmits(['sqlResults'])
 
 const item_no = ref('')
 
-async function getItemInfo () {
+async function getInfo () {
   if (!item_no.value) return
   try {
     emit('sqlResults', null)
-    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/read-sql`, {
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/getItem`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ item_no: item_no.value })
+      body: JSON.stringify({ item_no: item_no.value.toUpperCase() })
     })
     const body = await res.json()
     emit('sqlResults', body)
@@ -50,5 +51,4 @@ async function getItemInfo () {
     console.error(error)
   }
 }
-
 </script>

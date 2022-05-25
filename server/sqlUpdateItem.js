@@ -1,7 +1,7 @@
 const sql = require('mssql')
 
 const sqlConfig = {
-  domain: 'dsrm',
+  domain: process.env.WIN_DOMAIN,
   user: process.env.WIN_USER,
   password: process.env.WIN_PASSWORD,
   server: process.env.SQL_SERVER,
@@ -17,7 +17,6 @@ const sqlConfig = {
 }
 
 async function updateItem (payload) {
-  console.log({ payload })
   const {
     item_no = null,
     app = null,
@@ -35,7 +34,7 @@ async function updateItem (payload) {
     let query = null
 
     if (app === 'experlogix') {
-      query = `update [${process.env.EXP_DATABASE}].dbo.[Experlogix_Items] set ListPrice = '${list_price}' where PseudoItemNumber = '${item_no}'`
+      query = `update [${process.env.EXP_DATABASE}].dbo.[${process.env.EXP_ITEM_TABLE}] set ListPrice = '${list_price}' where PseudoItemNumber = '${item_no}'`
     } else if (app === 'nav') {
       const fieldsToSetArr = []
       if (update_standard_cost) fieldsToSetArr.push(`[Standard Cost] = ${standard_cost}`)
@@ -46,7 +45,7 @@ async function updateItem (payload) {
       if (fieldsToSetArr.length > 1) fieldsToSet = fieldsToSetArr.join(', ')
       else fieldsToSet = fieldsToSetArr[0]
 
-      query = `update [${process.env.NAV_DATABASE}].dbo.[DS Master - LIVE$Item] set ${fieldsToSet} where [No_] = '${item_no}'`
+      query = `update [${process.env.NAV_DATABASE}].dbo.[${process.env.NAV_ITEM_TABLE}] set ${fieldsToSet} where [No_] = '${item_no}'`
     } else {
       sql.close()
       return response

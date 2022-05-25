@@ -1,15 +1,45 @@
 <template>
-  <NavBar />
-  <div class="grid surface-section text-800 p-4 mx-8">
+  <NavBar @set-active-view="activeView = $event; response = null" />
+  <div
+    v-if="activeView === 'option'"
+    class="grid surface-section text-800 p-4 mx-8"
+  >
+    <div class="col-12 md:col-6 p-6 text-center md:text-left flex">
+      <section>
+        <LookupOption @sql-results="response = $event" />
+        <InfoCard
+          v-if="itemInfo"
+          type="option"
+          :item-info="itemInfo"
+        />
+      </section>
+    </div>
+     <div class="col-12 md:col-6 overflow-hidden">
+      <UpdateOption :item-info="itemInfo" />
+    </div>
+    <div
+      v-if="response"
+      class="col-12 p-6 fadein animation-duration-300 overflow-scroll"
+    >
+      Response
+      <pre class=" p-4 surface-card border-round">
+{{ response }}
+      </pre>
+    </div>
+  </div>
+  <div
+    v-if="activeView === 'item'"
+    class="grid surface-section text-800 p-4 mx-8"
+  >
     <div class="col-12 md:col-6 p-6 text-center md:text-left flex">
       <section>
         <LookupItem @sql-results="response = $event" />
-        <ItemLookUpInfoCardVue
+        <InfoCard
           v-if="itemInfo"
           type="nav"
           :item-info="itemInfo"
         />
-        <ItemLookUpInfoCardVue
+        <InfoCard
           v-if="itemInfo"
           type="experlogix"
           :item-info="itemInfo"
@@ -25,8 +55,8 @@
     >
       Response
       <pre class=" p-4 surface-card border-round">
-  {{ response }}
-            </pre>
+{{ response }}
+      </pre>
     </div>
   </div>
   <Toast />
@@ -36,10 +66,14 @@
 import { ref, computed } from 'vue'
 import NavBar from './NavBar.vue'
 import LookupItem from './components/LookupItem.vue'
-import ItemLookUpInfoCardVue from './components/ItemLookUpInfoCard.vue'
+import LookupOption from './components/LookupOption.vue'
+import InfoCard from './components/InfoCard.vue'
 import UpdateItem from './components/UpdateItem.vue'
+import UpdateOption from './components/UpdateOption.vue'
 
 const response = ref(null)
+
+const activeView = ref('option')
 
 const itemInfo = computed(() => {
   if (!response.value) return null

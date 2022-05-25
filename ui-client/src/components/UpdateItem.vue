@@ -181,7 +181,7 @@ async function updateItem (app) {
       app,
       ...update
     }
-    await fetch(`${import.meta.env.VITE_API_BASE_URL}/update-item`, {
+    await fetch(`${import.meta.env.VITE_API_BASE_URL}/updateItem`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
