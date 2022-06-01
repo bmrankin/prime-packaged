@@ -73,7 +73,7 @@ import UpdateOption from './components/UpdateOption.vue'
 
 const response = ref(null)
 
-const activeView = ref('option')
+const activeView = ref('item')
 
 const itemInfo = computed(() => {
   if (!response.value) return null

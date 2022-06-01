@@ -1,6 +1,10 @@
 # CHANGELOG
 
-# For Release
+# [0.3.1]
+- Add link to docs
+- Load `Update Item` as home page
+
+# [0.3.0]
 - Handle letter case on item input [#1383](https://github.com/dascosales/dev-team/issues/1383)
 - Add Experlogix option update [#1384](https://github.com/dascosales/dev-team/issues/1384)
 
